@@ -7,12 +7,16 @@ export default function Login({ history }) {
   const [username, setUsername] = useState('')
 
   async function handleSubmit(e) {
+    let response = ''
     e.preventDefault()
     await api.post('/devs', {
       username
-    }).then(res => console.log(res.data))
+    }).then(res => response = res.data)
+      .catch(err => console.warn(err))
 
-    history.push('/main')
+    const { _id } = response
+
+    history.push(`/dev/${_id}`)
   }
 
   return (
